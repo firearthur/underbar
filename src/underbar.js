@@ -121,7 +121,7 @@
     //paramater at line 349 but there was an undefined FILL_ME_IN argument in expect() so done some modification
     //and made the test pass 
     if(iterator !== undefined){
-      debugger;
+      
       uniqueArray.forEach((element) => { iterator(element);});
     }
 
@@ -134,6 +134,7 @@
     // map() is a useful primitive iteration function that works a lot
     // like each(), but in addition to running the operation on all
     // the members, it also maintains an array of results.
+    return collection.map(iterator);
   };
 
   /*
@@ -175,6 +176,18 @@
   //   }); // should be 5, regardless of the iterator function passed in
   //          No accumulator is given so the first element is used.
   _.reduce = function(collection, iterator, accumulator) {
+
+    //final goal is to reduce the array or the object to a single value
+    //call the iterator(accumulator, item) for each item in collection
+    //accumulator is either an array or an object and should be 
+    //the return value of the previous iterator call
+
+    //if reduce is called with a value for accumulator it would be the starting value
+    //if accumulator is undefined (no starting value was provided use first array item as it)
+
+    // let reducedCollection = collection.reduce(iterator,accumulator);
+    // return reducedCollection;
+    return collection.reduce(iterator, accumulator);
   };
 
   // Determine if the array or object contains a given value (using `===`).
