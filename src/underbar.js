@@ -89,6 +89,9 @@
 
   // Return all elements of an array that pass a truth test.
   _.filter = function(collection, test) {
+    debugger;
+    let filteredArray = collection.filter((element) => {return test(element);});
+    return filteredArray;
   };
 
   // Return all elements of an array that don't pass a truth test.
