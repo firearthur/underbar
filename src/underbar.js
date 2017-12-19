@@ -99,6 +99,7 @@
   _.reject = function(collection, test) {
     // TIP: see if you can re-use _.filter() here, without simply
     // copying code in and modifying it
+    // You suggested to re-use _.filter() and the Mocha test is complaining about that :-O
     // Yeah the Mocha test is broken
     let passedElements = _.filter(collection, test);
     let differenceArray = collection.filter((element) => {return !passedElements.includes(element);});
@@ -108,6 +109,23 @@
 
   // Produce a duplicate-free version of the array.
   _.uniq = function(array, isSorted, iterator) {
+    
+    let tempSet = new Set(array);
+    let uniqueArray = [];
+    tempSet.forEach((element) => {uniqueArray.push(element);});
+
+    //dont really understand how the iterator works
+    //looked on the official undersocre website and all they
+    //mentioned about it was 'If you want to compute unique items based on a transformation, pass an iteratee function.'
+    //did some debugging and went into spec/part1.js Mocha tests to figure out what was passed in the iterator
+    //paramater at line 349 but there was an undefined FILL_ME_IN argument in expect() so done some modification
+    //and made the test pass 
+    if(iterator !== undefined){
+      debugger;
+      uniqueArray.forEach((element) => { iterator(element);});
+    }
+
+    return uniqueArray;
   };
 
 
