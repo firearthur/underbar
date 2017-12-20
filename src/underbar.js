@@ -175,20 +175,30 @@
   //     return total + number * number;
   //   }); // should be 5, regardless of the iterator function passed in
   //          No accumulator is given so the first element is used.
+
+
+
   _.reduce = function(collection, iterator, accumulator) {
 
-    //final goal is to reduce the array or the object to a single value
-    //call the iterator(accumulator, item) for each item in collection
-    //accumulator is either an array or an object and should be 
-    //the return value of the previous iterator call
+    // debugger;
+    if(accumulator || accumulator === 0){
 
-    //if reduce is called with a value for accumulator it would be the starting value
-    //if accumulator is undefined (no starting value was provided use first array item as it)
+      for(let i = 0; i < collection.length; i++){
+        accumulator = iterator(accumulator, collection[i]);
+      } 
+    } else {
+      let firstElement = collection[0];
+      accumulator = firstElement;
+      for(let i = 1; i < collection.length; i++){
+        accumulator = iterator(accumulator, collection[i]);
+      }
 
-    // let reducedCollection = collection.reduce(iterator,accumulator);
-    // return reducedCollection;
-    return collection.reduce(iterator, accumulator);
+    }
+
+    return accumulator;
   };
+
+
 
   // Determine if the array or object contains a given value (using `===`).
   _.contains = function(collection, target) {
