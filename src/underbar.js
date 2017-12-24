@@ -206,7 +206,6 @@
 
   _.reduce = function(collection, iterator, accumulator) {
 
-    // debugger;
     if(accumulator || accumulator === 0){
 
       for(let i = 0; i < collection.length; i++){
@@ -230,26 +229,104 @@
   _.contains = function(collection, target) {
     // TIP: Many iteration problems can be most easily expressed in
     // terms of reduce(). Here's a freebie to demonstrate!
-    debugger;
-    return _.reduce(collection, function(wasFound, item) {
+
+    // return _.reduce(collection, function(wasFound, item) {
       
-      if (wasFound) {
-        return true;
+    //   if (wasFound) {
+    //     return true;
+    //   }
+    //   return item === target;
+    // }, false);
+  
+    if(Array.isArray(collection)){
+      return collection.includes(target);
+    } else {
+      for(let key in collection){
+        if(collection[key] === target){
+          return true;
+        }
       }
-      return item === target;
-    }, false);
+    }
+    return false;
   };
 
 
   // Determine whether all of the elements match a truth test.
   _.every = function(collection, iterator) {
     // TIP: Try re-using reduce() here.
+    
+    //create a variable to keep track of truthiness of all values isEveryTrue
+    //find out the type of collection it is array or object
+    //loop over each item in the collection running the iterator test on it
+    //if the return value of the iterator is true for every item in the collection
+    //then the return value of every is true
+    //if the return of the iterator is false for at least one item in the collection
+    //then return false 
+    if(collection.length < 1){
+      return true;
+    }
+
+    let isEveryTrue = false;
+
+    if(Array.isArray(collection)){
+
+      for (let i = 0; i < collection.length; i++) {
+        let elementTruthiness = collection[i];
+
+        if (iterator) {
+          elementTruthiness = iterator(collection[i]);  
+        }
+
+        if(!isEveryTrue && elementTruthiness){
+          isEveryTrue = true;
+        } else if(!elementTruthiness){
+          return false;
+        }
+      }
+    } else if(typeof collection === 'object'){
+      for (let key in collection) {
+        if(!isEveryTrue && iterator(collection[key])){
+          isEveryTrue = true;
+        } else if(!iterator(collection[key])){
+          return false;
+        }
+      }
+
+    } else {
+      return false;
+    }    
+    return isEveryTrue;
   };
 
   // Determine whether any of the elements pass a truth test. If no iterator is
   // provided, provide a default one
+
+  //goal is to return a boolean for 
+  // _.some = function(collection, iterator) {
+  //   // TIP: There's a very clever way to re-use every() here.
+  //   if(collection.length < 1){
+  //     return false;
+  //   }
+
+  //   for (var i = 0; i < collection.length; i++) {
+  //     return _.every([collection[i]], iterator);
+  //   }
+    
+  // };
+
   _.some = function(collection, iterator) {
     // TIP: There's a very clever way to re-use every() here.
+    if(collection.length < 1){
+      return false;
+    }
+
+    for (var i = 0; i < collection.length; i++) {
+      if(!_.every([collection[i]], iterator)){
+        continue;
+      }
+      return _.every([collection[i]], iterator);
+    }
+    return false;
   };
 
 
