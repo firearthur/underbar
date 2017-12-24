@@ -91,7 +91,14 @@
   _.filter = function(collection, test) {
     //Used the function array.filter but the Mocha test thought I used the Underbar filter function
     //Could implement another filter function like the array.filter I used but why reinvent the wheel? ;)
-    let filteredArray = collection.filter((element) => {return test(element);});
+    let filteredArray = [];
+
+    for (var i = 0; i < collection.length; i++) {
+      if(test(collection[i])){
+       filteredArray.push(collection[i]);
+      }
+    };
+
     return filteredArray;
   };
 
@@ -101,10 +108,24 @@
     // copying code in and modifying it
     // You suggested to re-use _.filter() and the Mocha test is complaining about that :-O
     // Yeah the Mocha test is broken
-    let passedElements = _.filter(collection, test);
-    let differenceArray = collection.filter((element) => {return !passedElements.includes(element);});
 
-    return differenceArray;
+
+    // the follwing implementation uses the _filter as the exercise suggests
+    // but it fails the test for not using any underbar functions 
+    // let passedElements = _.filter(collection, test);
+    // let differenceArray = collection.filter((element) => {return !passedElements.includes(element);});
+
+    // return differenceArray;
+
+    let filteredArray = [];
+
+    for (var i = 0; i < collection.length; i++) {
+      if(!test(collection[i])){
+       filteredArray.push(collection[i]);
+      }
+    };
+
+    return filteredArray;    
   };
 
   // Produce a duplicate-free version of the array.
@@ -134,7 +155,12 @@
     // map() is a useful primitive iteration function that works a lot
     // like each(), but in addition to running the operation on all
     // the members, it also maintains an array of results.
-    return collection.map(iterator);
+    let mappedArray = [];
+    for (var i = 0; i < collection.length; i++) {
+      mappedArray.push(iterator(collection[i]));
+    };
+
+    return mappedArray;
   };
 
   /*
@@ -204,7 +230,9 @@
   _.contains = function(collection, target) {
     // TIP: Many iteration problems can be most easily expressed in
     // terms of reduce(). Here's a freebie to demonstrate!
+    debugger;
     return _.reduce(collection, function(wasFound, item) {
+      
       if (wasFound) {
         return true;
       }
