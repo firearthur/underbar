@@ -349,11 +349,31 @@
   //     bla: "even more stuff"
   //   }); // obj1 now contains key1, key2, key3 and bla
   _.extend = function(obj) {
+    //goal is to extend the given objects to have all the properties of the passed in objects
+    //input is one object to extend and object(s) to provied properties
+    //loop over the arguments object elements
+    //loop over each element's keys
+    //create a new property in obj1 for each property in the given element
+    for (let i = 1; i < arguments.length; i++) {
+      for(let key in arguments[i]){
+        obj[key] = arguments[i][key];
+      }
+    }      
+   return obj; 
   };
 
   // Like extend, but doesn't ever overwrite a key that already
   // exists in obj
   _.defaults = function(obj) {
+    for (let i = 1; i < arguments.length; i++) {
+      for(let key in arguments[i]){
+        if(obj.hasOwnProperty(key)){
+          continue;
+        }
+        obj[key] = arguments[i][key];
+      }
+    }      
+   return obj; 
   };
 
 
