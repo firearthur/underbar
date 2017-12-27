@@ -472,6 +472,22 @@
   // input array. For a tip on how to make a copy of an array, see:
   // http://mdn.io/Array.prototype.slice
   _.shuffle = function(array) {
+    let copiedArray =  array.slice();
+    let shuffledArray = [];
+    //find the range formula Math.floor(Math.random()*arr.length)
+    //splice() the item at the generated index
+    //push() it in the shuffledArray
+    //return the shuffledArray
+    let randomlyGeneratedIndex;
+    let shuffledElement;
+
+    for(let i = 0; i < array.length; i++){
+      randomlyGeneratedIndex = Math.floor(Math.random() * copiedArray.length);
+      shuffledElement = copiedArray.splice(randomlyGeneratedIndex, 1)[0];
+      shuffledArray.push(shuffledElement);
+    };
+
+    return shuffledArray;
   };
 
 
