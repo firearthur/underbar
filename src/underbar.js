@@ -433,7 +433,7 @@
       var funcArguments = [...arguments];
       funcArguments.shift();
       var argumentsString = funcArguments.toString();
-      
+
       if (results.hasOwnProperty(argumentsString)) {
         return results[argumentsString];
       } else {
@@ -453,6 +453,11 @@
   // parameter. For example _.delay(someFunction, 500, 'a', 'b') will
   // call someFunction('a', 'b') after 500ms
   _.delay = function(func, wait) {
+    var funcArguments = [...arguments];
+    funcArguments.shift();
+    funcArguments.shift();
+
+    return setTimeout(func,wait,...funcArguments);
   };
 
 
