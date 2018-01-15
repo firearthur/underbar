@@ -132,8 +132,8 @@
   _.uniq = function(array, isSorted, iterator) {
 
     let tempSet = new Set(array);
-    let uniqueArray = [];
-    tempSet.forEach((element) => {uniqueArray.push(element);});
+    let uniqueArray = [...tempSet]; // more efficient way than forEach and push
+    // tempSet.forEach((element) => {uniqueArray.push(element);});
 
     //dont really understand how the iterator works
     //looked on the official undersocre website and all they
@@ -142,7 +142,6 @@
     //paramater at line 349 but there was an undefined FILL_ME_IN argument in expect() so done some modification
     //and made the test pass
     if(iterator !== undefined){
-
       uniqueArray.forEach((element) => { iterator(element);});
     }
 
@@ -206,7 +205,7 @@
 
   _.reduce = function(collection, iterator, accumulator) {
 
-    if(accumulator || accumulator === 0){
+    if(accumulator || accumulator === 0){ //checking if a value was passed in as accumulator
 
       for(let i = 0; i < collection.length; i++){
         accumulator = iterator(accumulator, collection[i]);
@@ -324,7 +323,7 @@
       if(!_.every([collection[i]], iterator)){
         continue;
       }
-      return _.every([collection[i]], iterator);
+      return true;
     }
     return false;
   };
@@ -416,18 +415,20 @@
   // _.memoize should return a function that, when called, will check if it has
   // already computed the result for the given argument and return that value
   // instead if possible.
-  _.memoize = function(func) {
-    //goal is to return a function that checks if the result is already
-    //cached in and return it. if not, then compute it and chache it in
 
-    //copy the behavior of once
-    //add an object of chached arguments and their results
-    //add a test to check if the current set of arguments are computed
-    //if they are then return the result. if they aren't then compute it
-    //and store it in the object and return it
+
+  //goal is to return a function that checks if the result is already
+  //cached in and return it. if not, then compute it and chache it in
+
+  //copy the behavior of once
+  //add an object of chached arguments and their results
+  //add a test to check if the current set of arguments are computed
+  //if they are then return the result. if they aren't then compute it
+  //and store it in the object and return it
+
+  _.memoize = function(func) {
 
     var results = {};
-
 
     return function() {
       var funcArguments = [...arguments];
@@ -437,7 +438,8 @@
       if (results.hasOwnProperty(argumentsString)) {
         return results[argumentsString];
       } else {
-        results[argumentsString] = func.apply(this, arguments);
+        // results[argumentsString] = func.apply(this, arguments);
+        results[argumentsString] = func(...arguments);
         return results[argumentsString];
       }
 
